@@ -1,8 +1,9 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class rkf():
 
-    def __init__(self,f, a, b, x0, atol, rtol, hmax, hmin):
+    def __init__(self,f, a, b, x0, atol, rtol, hmax, hmin,plot_stepsize=False):
         self.f=f
         self.a=a
         self.b=b
@@ -11,7 +12,8 @@ class rkf():
         self.rtol=rtol
         self.hmax=hmax
         self.hmin=hmin
-    
+        self.plot_stepsize=plot_stepsize
+
     def solve(self):
 
         a2  =   2.500000000000000e-01  #  1/4
@@ -81,5 +83,15 @@ class rkf():
             elif h < self.hmin or t==t-h:
                 raise RuntimeError("Error: Could not converge to the required tolerance.")
                 break
-        return (X, T)
+                
+        if self.plot_stepsize is True:
+            f=14
+            fig1, ax1 = plt.subplots()
+            csfont = {'fontname':'Times New Roman'}
+            ax1.plot(T.T[:-1],T.T[1:]-T.T[:-1],'-ob', lw=0.5, ms=2)
+            plt.xlabel(r'$x$',fontsize=f)
+            plt.ylabel('Step size',fontsize=f,**csfont)
+            plt.tight_layout()
+            plt.show()
 
+        return (X, T)
