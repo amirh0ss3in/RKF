@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 class rkf():
 
-    def __init__(self,f, a, b, x0, atol, rtol, hmax, hmin,plot_stepsize=False):
+    def __init__(self,f, a, b, x0, atol=1e-8, rtol=1e-6, hmax=1e-1, hmin=1e-40,plot_stepsize=False,show_info=True):
         self.f=f
         self.a=a
         self.b=b
@@ -13,6 +14,7 @@ class rkf():
         self.hmax=hmax
         self.hmin=hmin
         self.plot_stepsize=plot_stepsize
+        self.show_info=show_info
 
     def solve(self):
 
@@ -48,7 +50,9 @@ class rkf():
         c3  =   5.489278752436647e-01  #  1408/2565
         c4  =   5.353313840155945e-01  #  2197/4104
         c5  =  -2.000000000000000e-01  # -1/5
-
+        
+        start_time = time.clock()
+        
         t = self.a
         x = np.array(self.x0)
         h = self.hmax
@@ -83,7 +87,11 @@ class rkf():
             elif h < self.hmin or t==t-h:
                 raise RuntimeError("Error: Could not converge to the required tolerance.")
                 break
-                
+        
+        if self.show_info is True:
+            print('Execution time:',time.clock() - start_time, 'seconds')        
+            print('Number of data points:',len(T))
+
         if self.plot_stepsize is True:
             f=14
             fig1, ax1 = plt.subplots()
@@ -93,5 +101,7 @@ class rkf():
             plt.ylabel('Step size',fontsize=f,**csfont)
             plt.tight_layout()
             plt.show()
+        
 
-        return (X, T)
+        
+        return (T,X)
