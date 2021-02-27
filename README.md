@@ -39,4 +39,5 @@ rot_animation = animation.FuncAnimation(fig, rotate, frames=np.arange(0, 600, 2)
 rot_animation.save('lorenz.gif', dpi=400, writer='imagemagick')
 
 ```
-[![lorenz.gif](https://i.postimg.cc/MKFkcWv6/lorenz.gif)](https://postimg.cc/7f0tdr3d)
+
+![Alt Text](https://i.postimg.cc/MKFkcWv6/lorenz.gif)
