@@ -42,7 +42,7 @@ def lorenz(t,u):
 
 x0=[2,2,2]
 
-t,u  = rkf( f=lorenz, a=0, b=1e+1, x0=x0, atol=1e-8, rtol=1e-6 , hmax=1e-1, hmin=1e-40,plot_stepsize=True).solve()
+t,u  = rkf( f=lorenz, a=0, b=1e+1, x0=x0, atol=1e-8, rtol=1e-6 , hmax=1e-1, hmin=1e-40,plot_stepsize=False).solve()
 
 x,y,z= u.T
 
